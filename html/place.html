@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Places</title>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC__koaN2BRITn0sekfNDGXX9TfgVfvmF0&libraries=places"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>    
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-animate.min.js"></script>
+        <script src="../js/place.js"></script>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" type="text/css" />       
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
+
+        <link href="../css/place.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body ng-app="myApp">
+        <div class="row break"></div>
+        <div id="mainContainer" class="container" ng-controller="mainController">
+            <div id="formContainer" class="row">
+                <div class="col-lg-1 col-md-1 col-sm-1">
+                </div>
+                <div class="col-lg-10 col-md-10 col-sm-10">
+                    <div class="jumbotron no-padding-top no-padding-bottom margin-bottom-2 border-grey no-margin-left no-margin-right padding-left-15 padding-right-15">
+                        <div class="row no-margin-bottom">
+                            <div class="col-lg-2 col-md-2 col-sm-2"></div>
+                            <div class="col-lg-9 col-md-9 col-sm-9 no-padding text-center margin-top-1">
+                                <h4>Travel and Entertainment Search</h4>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1"></div>
+                        </div>
+                        <div class="row form-group no-margin-bottom">
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label for="keywordLbl" class="col-form-label-sm">Keyword<span class="text-danger">*</span></label>
+                            </div>
+                            <div class="col-lg-9 col-md-9 col-sm-9">
+                                <input type="text" class="form-control form-control-sm" id="keyword">
+                                <div class="row">
+                                    <span class="col-lg-12 col-md-12 col-sm-12 invalid-feedback no-margin-top margin-bottom-2 hidden" id="keywordErr">Please enter a keyword.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-group no-margin-bottom">
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label for="categoryLbl" class="col-form-label-sm">Category</label>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <select class="form-control form-control-sm" id="category"></select>
+                            </div>
+                        </div>
+                        <div class="row form-group no-margin-bottom">
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label for="distanceLbl" class="col-form-label-sm">Distance (miles)</label>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <input type="text" class="form-control form-control-sm" id="distance" placeholder="10"/>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label for="fromLbl" class="col-form-label-sm">From<span class="text-danger">*</span></label>
+                            </div>
+                            <div class="col-lg-9 col-md-9 col-sm-9">
+                                <table class="locationTbl">
+                                    <tbody>
+                                        <tr>
+                                            <td><input type="radio" name="location" id="currLoc" value="currLoc" checked></td>
+                                            <td><label for="currLocLbl" class="col-form-label-sm no-padding no-margin">Current location</label></td>
+                                            <td>
+                                                <input type="hidden" id="currLatitude" value="">
+                                                <input type="hidden" id="currLongitude" value="">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="radio" name="location" id="disLoc" value="disLoc"></td>
+                                            <td><label for="disLocLbl" class="col-form-label-sm no-padding no-margin">Other. Please specify:</label></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <input type="text" id="disLocTxt" class="form-control form-control-sm" placeholder="Enter a location" disabled/>
+                                                <span class="invalid-feedback hidden no-margin-top marign-bottom-2" id="disLocErr">Please enter a location.</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <span ng-click="showDetails()" class="display-inline-block"><button class="btn btn-sm btn-primary" id="searchBtn" disabled><i class="fa fa-search"></i> Search</button></span>
+                                <button class="btn btn-sm btn-light" id="clearBtn">Clear</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-1 col-md-1 col-sm-1">
+                </div>
+            </div>
+            <div class="tabContainer row">
+                <div class="col-lg-4 col-md-4 col-sm-3 col-xs-2"></div>
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-8">
+                    <nav class="nav nav-pills nav-fill nav-justified nav-center">
+                        <span ng-click="showResults()" class="display-inline-block"><a class="nav-item nav-link active" href="#" id="resultsTab">Results</a></span>
+                        <span ng-click="showResults()" class="display-inline-block"><a class="nav-item nav-link" href="#" id="favoritesTab">Favorites</a></span>
+                    </nav>
+                </div>
+                <div class="col-lg-4 col-md-2 col-sm-3 col-xs-2"></div>
+            </div>
+            <div class="row margin-top-5 hidden" id="loader">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="progress full-width">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="resultsContainer" class="position-relative">
+                <div id="leftPanel" class='animate-slide-right full-width' ng-show="details">
+                    <div class="row margin-top-5 hidden" id="placesDiv">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="row hidden" id="tableNavDiv">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="row" id="navigation">
+                                        <div class="col-lg-10 col-md-10 col-sm-10">
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                            <div class="row floatRight">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <span ng-click="showTable()">
+                                                        <button class="btn btn-sm btn-light" id="detailsNav" disabled>Details <i class="fa fa-angle-right"></i></button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row margin-top-1">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-sm table-hover" id="placesTbl">
+                                                    <thead>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">Category</th>
+                                                        <th scope="col">Name</th>
+                                                        <th scope="col">Address</th>
+                                                        <th scope="col">Favorite</th>
+                                                        <th scope="col">Details</th>
+                                                    </thead>
+                                                    <tbody ng-placesTableBody></tbody>
+                                                </table>
+                                                <table class="table table-sm table-hover" id="favoritesTbl">
+                                                    <thead>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">Category</th>
+                                                        <th scope="col">Name</th>
+                                                        <th scope="col">Address</th>
+                                                        <th scope="col">Favorite</th>
+                                                        <th scope="col">Details</th>
+                                                    </thead>
+                                                    <tbody ng-favTableBody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row margin-top-1 hidden" id="pagination-control">
+                        <div class="col-lg-5 col-md-5 col-sm-5"></div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 text-center">
+                            <button class="btn btn-sm btn-light hidden" id="previous">Previous</button>
+                            <button class="btn btn-sm btn-light hidden" id="next">Next</button>
+                        </div>
+                        <div class="col-lg-5 col-md-5 col-sm-5"></div>
+                    </div>
+                    <div class="row margin-top-1 hidden" id="fav-pagination-control">
+                        <div class="col-lg-5 col-md-5 col-sm-5"></div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 text-center">
+                            <button class="btn btn-sm btn-light hidden" id="favPrevious">Previous</button>
+                            <button class="btn btn-sm btn-light hidden" id="favNext">Next</button>
+                        </div>
+                        <div class="col-lg-5 col-md-5 col-sm-5"></div>
+                    </div>
+                </div>
+                <div id="rightPanel" class='animate-slide-left full-width' ng-show="result">
+                    <div id="detailsContainer" class="hidden">
+                        <div class="row margin-top-1">
+                            <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                                <b><span id="placeName"></span></b>
+                            </div>
+                        </div>
+                        <div class="row margin-top-1">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <span ng-click="showDetails()">
+                                    <button class="btn btn-sm btn-light floatLeft" id="backToResult"><i class="fa fa-chevron-left"> List</i></button>
+                                </span>
+                                <button class="btn btn-sm btn-light floatRight" id="twitter" disabled></button>
+                                <button class="btn btn-sm btn-light floatRight margin-right-1 favorite" id="favoritePlace" disabled><i class='fa fa-star-o'></i></button>
+                            </div>
+                        </div>
+                        <div class="row margin-top-1">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <ul class="nav nav-tabs small justify-content-end">
+                                  <li class="nav-item">
+                                    <a class="nav-link active" href="#info" data-toggle="tab">Info</a>
+                                  </li>
+                                  <li class="nav-item">
+                                    <a class="nav-link" href="#photos" data-toggle="tab">Photos</a>
+                                  </li>
+                                  <li class="nav-item">
+                                    <a class="nav-link" href="#map" data-toggle="tab">Map</a>
+                                  </li>
+                                  <li class="nav-item">
+                                    <a class="nav-link" href="#reviews" data-toggle="tab">Reviews</a>
+                                  </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row margin-top-1">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="info" role="tabpanel" aria-labelledby="info-tab">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped" id="placeInfoTbl">
+                                                        <tbody>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="photos" role="tabpanel" aria-labelledby="photos-tab">
+                                        <div class="row">
+                                            <div class="column placePhotos" data-id="1"></div>
+                                            <div class="column placePhotos" data-id="2"></div>
+                                            <div class="column placePhotos" data-id="3"></div>
+                                            <div class="column placePhotos" data-id="4"></div>
+                                        </div>
+                                        <div class="row margin-top-5 warning" id="noPhotos">
+                                            <div class="col-lg-1 col-md-1 col-sm-1">
+                                            </div>
+                                            <div class="col-lg-10 col-md-10 col-sm-10 hidden warnPhotos">
+                                                <div class="alert alert-warning">
+                                                    <span>No records</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-1 col-md-1 col-sm-1">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="map" role="tabpanel" aria-labelledby="map-tab">
+                                        <div class="row">
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <label for="fromDirection" class="col-form-label-sm">From</label>
+                                                <input type="text" id="fromAddress" class="form-control form-control-sm"/>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <label for="toDirection" class="col-form-label-sm">To</label>
+                                                <input type="text" id="toAddress" class="form-control form-control-sm" disabled/>
+                                            </div>
+                                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                                <label for="travelMode" class="col-form-label-sm">Travel Mode</label>
+                                                <select class="form-control form-control-sm" id="travelMode">
+                                                    <option value="DRIVING">Driving</option>
+                                                    <option value="BICYCLING">Bicycling</option>
+                                                    <option value="TRANSIT">Transit</option>
+                                                    <option value="WALKING">Walking</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                                <label class="col-form-label-sm row">&nbsp;</label>
+                                                <button class="btn btn-sm btn-primary" id="directionButton">Get Directions</button>
+                                            </div>
+                                        </div>
+                                        <div class="row margin-top-1">
+                                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                                <button id="mapView" class="btn btn-sm btn-light hidden padding-1">
+                                                    <img src="http://cs-server.usc.edu:45678/hw/hw8/images/Map.png">
+                                                </button>
+                                                <button id="streetView" class="btn btn-sm btn-light padding-1">
+                                                    <img src="http://cs-server.usc.edu:45678/hw/hw8/images/Pegman.png" />
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="row margin-top-1">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 height-400 position-relative">
+                                                <div id="mapContainer" class="full-width full-height">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div id="directionsPanel"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                
+                                                <div class="btn-group dropdown show">
+                                                    <a class="btn btn-sm btn-secondary dropdown-toggle" href="#" role="button" id="reviewType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Google Reviews
+                                                    </a>
+
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" id="reviewTypeOptions">
+                                                        <span ng-click="showGoogle();"><button type="button" class="dropdown-item" data-type="google">Google Reviews</button></span><span ng-click="showYelp();">
+                                                        <button type="button" class="dropdown-item" data-type="yelp">Yelp Reviews</button></span>
+                                                    </div>
+                                                </div>                                                
+                                                <div class="btn-group dropdown show">
+                                                    <a class="btn btn-sm btn-secondary dropdown-toggle" href="#" role="button" id="reviewOrder" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Default Order
+                                                    </a>
+
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" id="reviewOrderOptions">
+                                                        <button type="button" class="dropdown-item" data-order="1">Default Order</button>
+                                                        <button type="button" class="dropdown-item" data-order="2">Highest Rating</button>
+                                                        <button type="button" class="dropdown-item" data-order="3">Lowest Rating</button>
+                                                        <button type="button" class="dropdown-item" data-order="4">Most Recent</button>
+                                                        <button type="button" class="dropdown-item" data-order="5">Last Recent</button>
+                                                    </div>
+                                                </div>
+                                            
+                                            </div>
+                                        </div>
+                                        <div class="row margin-top-1">
+                                            <div class="col-12 animation-fade" id="googleReviewContainer" ng-show="google">    
+                                            </div>
+                                            <div class="col-12 animation-fade" id="yelpReviewContainer" ng-show="yelp">    
+                                            </div>
+                                        </div>
+                                        <div class="row margin-top-5 warning" id="noReviews">
+                                            <div class="col-lg-1 col-md-1 col-sm-1">
+                                            </div>
+                                            <div class="col-lg-10 col-md-10 col-sm-10 hidden warnReviews">
+                                                <div class=" alert alert-warning">
+                                                    <span>No records</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-1 col-md-1 col-sm-1">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row margin-top-5 warning" id="noRecordsDiv">
+                <div class="col-lg-1 col-md-1 col-sm-1">
+                </div>
+                <div class="col-lg-10 col-md-10 col-sm-10 hidden warn">
+                    <div class=" alert alert-warning">
+                        <span>No records</span>
+                    </div>
+                </div>
+                <div class="col-lg-10 col-md-10 col-sm-10 hidden error">
+                    <div class=" alert alert-danger">
+                        <span>Failed to get search results</span>
+                    </div>
+                </div>
+                <div class="col-lg-1 col-md-1 col-sm-1">
+                </div>
+            </div>
+            <div id="mapData"></div>
+        </div>
+        <div class="modal" tabindex="-1" role="dialog" id="dailyHoursModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Open Hours</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                      <div class="table-responsive">
+                          <table class="table table-sm" id="dailyHoursTbl">
+                            <tbody></tbody>
+                          </table>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

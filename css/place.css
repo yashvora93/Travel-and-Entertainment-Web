@@ -1,0 +1,273 @@
+body{
+    overflow-x: hidden;
+}
+.break {
+    height: 10px;
+}
+.margin-top-1 {
+    margin-top: 1%;
+}
+.no-margin-top {
+    margin-top: 0%;
+}
+.no-padding-top {
+    padding-top: 0% !important;
+}
+.no-padding-bottom {
+    padding-bottom: 0%;
+}
+.no-padding-top {
+    padding-top: 0%;
+}
+.no-padding-left {
+    padding-left: 0%;
+}
+.border-grey {
+    border: 1px solid #e8e7e8;
+    background-color: #f7f5f7;
+}
+.no-margin-left {
+    margin-left: 0%;
+}
+.no-margin-right {
+    margin-right: 0%;
+}
+.padding-left-15 {
+    padding-left: 15% !important;
+}
+.padding-right-15 {
+    padding-right: 15% !important;
+}
+.margin-bottom-2 {
+    margin-bottom: 2%;
+}
+.margin-bottom-1 {
+    margin-bottom: 1%;
+}
+.margin-right-1 {
+    margin-right: 1%;
+}
+.no-margin-bottom {
+    margin-bottom: 0%;
+}
+.no-padding {
+    padding: 0%;
+}
+.padding-1 {
+    padding: 1%;   
+}
+.padding-top-1 {
+    padding-top: 1%;
+}
+.padding-bottom-2 {
+    padding-bottom: 2%;
+}
+.padding-left-2 {
+    padding-left: 2%;   
+}
+.no-margin {
+    margin: 0%;
+}
+.text-center {
+    text-align: center;
+}
+.mandatory {
+    color: red;
+}
+.hidden {
+    display: none;
+}
+.btn-light {
+    background-color: white;
+    border: 1px solid lightgray;
+}
+.locationTbl {
+    width: 100%;
+}
+.locationTbl tr td:first-child {
+    width: 4%;
+}
+.nav-center {
+    width: 51%;
+    margin: auto;
+}
+.full-width {
+    width: 100%;
+}
+.full-height {
+    height: 100%;
+}
+.margin-top-5 {
+    margin-top: 5%;
+}
+.icon {
+    width: 35px;
+}
+#placesTbl th, #placesTbl td, #placeInfoTbl th, #placeInfoTbl td, #favoritesTbl th, #favoritesTbl td {
+    vertical-align: middle;
+    font-size: 13px;
+}
+.floatRight {
+    float: right;
+}
+.floatLeft {
+    float: left;
+}
+.yellow-color {
+    color: #fdd444;
+}
+.nowrap {
+    white-space: nowrap;
+}
+#twitter {
+    background: url("http://cs-server.usc.edu:45678/hw/hw8/images/Twitter.png") no-repeat;
+    background-size: contain;
+    width: 31px;
+    height: 100%;
+}
+#stars, .stars {
+    display: inline-block;
+}
+.column {
+    -ms-flex: 25%; /* IE10 */
+    flex: 25%;
+    max-width: 25%;
+    padding: 0 4px;
+}
+
+.column img {
+    margin-top: 8px;
+    vertical-align: middle;
+}
+
+/* Responsive layout - makes a two column-layout instead of four columns */
+@media screen and (max-width: 800px) {
+    .column {
+        -ms-flex: 50%;
+        flex: 50%;
+        max-width: 50%;
+    }
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+    .column {
+        -ms-flex: 100%;
+        flex: 100%;
+        max-width: 100%;
+    }
+}
+
+#mapView img {
+    width: 2rem;
+}
+#streetView img {
+    width: 2rem;
+}
+
+.height-400 {
+    height: 400px;
+}
+
+.position-relative {
+    position: relative;
+}
+.review {
+    border: 1px solid #9a9a9a;
+}
+.profile_photo {
+    width: 50px;
+    height: 50px;
+}
+.grey-color {
+    color: #9b9a9b;
+}
+.font-13 {
+    font-size: 13px;
+}
+.display-flex {
+    display: inline-flex;
+}
+.table-warning:hover {
+    background-color: 
+}
+.margin-top-5 {
+    margin-top: 5%;
+}
+.filled-favorite {
+    color: #fdce30;
+}
+.animate-slide-left {
+    -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1s;
+    -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1s;
+    -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1s;
+    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1s;
+    opacity:1;
+    line-height:20px;
+    position: absolute;
+    left: 0;
+}
+.animate-slide-right {
+    -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1s;
+    -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1s;
+    -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1s;
+    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1s;
+    opacity:1;
+    line-height:20px;
+    position: absolute;
+    right: 0;
+}
+.animate-slide-left.ng-hide {
+    left: -100%;
+    opacity:0;
+    padding:0 10px;
+}
+.animate-slide-right.ng-hide {
+    right: -100%;
+    opacity:0;
+    padding:0 10px;
+}
+.animation-fade {
+    -webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: fadein 1s; /* Firefox < 16 */
+    -ms-animation: fadein 1s; /* Internet Explorer */
+    -o-animation: fadein 1s; /* Opera < 12.1 */
+    animation: fadein 1s;
+}
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+.width-75 {
+    width: 75px;
+}
+.display-inline-block {
+    display: inline-block;
+}
+.text-link {
+    color: #007bff;
+}
