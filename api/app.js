@@ -78,7 +78,7 @@ app.get('/get/getPlaces', function(request, response) {
     
     if(disLocation && locationType === "disLoc") {
         var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + encodeURIComponent(disLocation);
-        url += "&key=AIzaSyC__koaN2BRITn0sekfNDGXX9TfgVfvmF0";
+        url += "&key=API_KEY";
         var promise = new Promise(function(resolve, reject) { 
             makeCall(url, null, resolve, reject);
         });
@@ -101,21 +101,21 @@ app.get('/get/getPlaces', function(request, response) {
 
 app.get("/get/getPlaceDetails", function(request, response) {
     var placeId = request.query.place_id;
-    var url = "https://maps.googleapis.com/maps/api/place/details/json?placeid=" + placeId + "&key=AIzaSyAciIxtBTSVZpfX-0TDDeNG7Om_7OCCOGA";
+    var url = "https://maps.googleapis.com/maps/api/place/details/json?placeid=" + placeId + "&key=API_KEY";
     
     makeCall(url, response);
 });
 
 app.get("/get/getNextPlaces", function(request, response) {
     var token = request.query.token;
-    var url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?pagetoken=" + token + "&key=AIzaSyAciIxtBTSVZpfX-0TDDeNG7Om_7OCCOGA";
+    var url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?pagetoken=" + token + "&key=API_KEY";
     
     makeCall(url, response);
 });
 
 app.get("/get/getYelpReviews", function(request, response) {
     
-    const apiKey = '5MLCy7-3VAoLKEadNmGEXu3CsY1QKKJoml0h7qX0j7x9yBoEDEEwpn_GOgpTysYN2wQXTUsGUYdSXqJENTt9A9Cq1c_6gyY5hEgvP4wDubBhvZSPZCSzKSWyS17BWnYx';
+    const apiKey = 'API_KEY';
 
     const client = yelp.client(apiKey);
     
