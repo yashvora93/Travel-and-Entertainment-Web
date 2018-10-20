@@ -1,0 +1,18 @@
+{
+	"name": "places",
+	"version": "0.0.1",
+	"private": true,
+	"dependencies": {
+		"aws-sdk": "^2.210.0",
+		"axios": "latest",
+		"body-parser": "latest",
+		"ejs": "latest",
+		"express": "latest",
+		"npm": "^5.8.0",
+		"promise": "latest",
+		"yelp-fusion": "latest"
+	},
+	"scripts": {
+		"start": "node app.js"
+	}
+}
